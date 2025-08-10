@@ -4,6 +4,12 @@ import numpy as np
 from PIL import Image
 import io
 import os
+import warnings
+
+# Suppress TensorFlow warnings
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+warnings.filterwarnings('ignore', category=UserWarning)
+tf.get_logger().setLevel('ERROR')
 
 app = Flask(__name__)
 

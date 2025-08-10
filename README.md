@@ -1,10 +1,72 @@
-# Potato Disease Detection API
+# 🥔 Potato Disease Detection API
 
-API untuk deteksi penyakit kentang menggunakan TensorFlow Lite model.
+API untuk deteksi penyakit pada daun kentang menggunakan TensorFlow Lite dan Flask.
 
-## Setup
+## 🚀 Deployment ke Railway.com
 
-1. Install dependencies:
+### Persiapan
+
+1. **Clone repository ini**
+2. **Pastikan file model ada di folder `model/`:**
+   - `model_unquant.tflite` (model TensorFlow Lite)
+   - `labels.txt` (label penyakit)
+
+### Deploy ke Railway
+
+1. **Login ke Railway.com**
+2. **Connect repository GitHub Anda**
+3. **Deploy otomatis menggunakan konfigurasi yang sudah ada**
+
+Railway akan otomatis mendeteksi:
+- `requirements.txt` untuk dependensi Python
+- `Procfile` untuk start command
+- `nixpacks.toml` untuk build configuration
+- `railway.json` untuk deployment settings
+
+### Environment Variables (Opsional)
+
+Railway akan otomatis set `PORT`, tapi Anda bisa menambahkan:
+- `FLASK_ENV=production`
+- `PYTHONPATH=/app`
+
+## 📋 API Endpoints
+
+### 1. Health Check
+```
+GET /health
+```
+
+### 2. Disease Detection
+```
+POST /detect
+Content-Type: multipart/form-data
+```
+
+**Body:** Upload file dengan key `file`
+
+**Response:**
+```json
+{
+  "detected": true,
+  "label": "Bercak Kering",
+  "percentage": "85.23%",
+  "confidence": 0.8523,
+  "top_predictions": [
+    {"label": "Bercak Kering", "confidence": "85.23%"},
+    {"label": "Busuk daun", "confidence": "12.45%"},
+    {"label": "Layu", "confidence": "2.32%"}
+  ]
+}
+```
+
+### 3. API Info
+```
+GET /
+```
+
+## 🧪 Testing Locally
+
+### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```

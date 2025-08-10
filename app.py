@@ -8,7 +8,9 @@ import warnings
 
 # Suppress TensorFlow warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+os.environ['TF_ENABLE_ONEDNN_OPTS'] = '0'
 warnings.filterwarnings('ignore', category=UserWarning)
+warnings.filterwarnings('ignore', category=FutureWarning)
 tf.get_logger().setLevel('ERROR')
 
 app = Flask(__name__)
@@ -204,9 +206,6 @@ def home():
         }
     })
 
-# Untuk deployment, hapus app.run() karena akan dijalankan oleh WSGI server (gunicorn, dll)
-# Streamlit tidak bisa menjalankan Flask server secara bersamaan
-
 if __name__ == '__main__':
     # Check apakah model dan labels file ada
     if not os.path.exists(model_path):
@@ -217,11 +216,14 @@ if __name__ == '__main__':
         print(f"Error: Labels file not found at {labels_path}")
         exit(1)
     
-    print("Potato Disease Detection API ready for deployment")
+    print("Potato Disease Detection API Starting...")
     print(f"Model loaded from: {model_path}")
     print(f"Labels loaded from: {labels_path}")
     print(f"Available diseases: {', '.join(labels)}")
     
-    # Untuk local testing, uncomment baris di bawah:
-    # port = int(os.environ.get('PORT', 8000))
-    # app.run(debug=True, host='0.0.0.0', port=port)
+    # Railway.com uses PORT environment variable
+    port = int(os.environ.get('PORT', 8000))
+    host = '0.0.0.0'
+    
+    print(f"Starting server on {host}:{port}")
+    app.run(debug=False, host=host, port=port)

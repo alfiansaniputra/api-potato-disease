@@ -74,7 +74,7 @@ def predict_disease(image_array):
     except Exception as e:
         raise ValueError(f"Error during prediction: {str(e)}")
 
-@app.route('/detect', methods=['POST'])
+@app.route('/detect', methods=['POST'])  # Changed to POST for file upload
 def detect_disease():
     """
     API endpoint untuk deteksi penyakit kentang
@@ -198,24 +198,5 @@ def home():
         }
     })
 
-# Untuk deployment, hapus app.run() karena akan dijalankan oleh WSGI server (gunicorn, dll)
-# Streamlit tidak bisa menjalankan Flask server secara bersamaan
-
-if __name__ == '__main__':
-    # Check apakah model dan labels file ada
-    if not os.path.exists(model_path):
-        print(f"Error: Model file not found at {model_path}")
-        exit(1)
-    
-    if not os.path.exists(labels_path):
-        print(f"Error: Labels file not found at {labels_path}")
-        exit(1)
-    
-    print("Potato Disease Detection API ready for deployment")
-    print(f"Model loaded from: {model_path}")
-    print(f"Labels loaded from: {labels_path}")
-    print(f"Available diseases: {', '.join(labels)}")
-    
-    # Untuk local testing, uncomment baris di bawah:
-    # port = int(os.environ.get('PORT', 3000))
-    # app.run(debug=True, host='0.0.0.0', port=port)
+# Removed the if __name__ == '__main__' block for deployment
+# This allows the app to be imported by WSGI servers like Gunicorn

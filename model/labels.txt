@@ -1,0 +1,11 @@
+0 Bercak Kering
+1 Busuk daun
+2 Cincin bakteri
+3 Daun menggulung 
+4 Fusarium
+5 Kutu daun 
+6 Lalat
+7 Layu
+8 mozaik
+9 Nematoda
+10 penggerek daun
